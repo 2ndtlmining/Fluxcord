@@ -1,0 +1,2 @@
+# Fluxcord
+Flux Discord notifications
