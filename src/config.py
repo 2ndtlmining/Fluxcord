@@ -1,5 +1,8 @@
 import os
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()  # loads .env from project root if present; no-op in Docker
 
 logger = logging.getLogger(__name__)
 

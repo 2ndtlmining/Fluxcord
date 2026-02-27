@@ -103,7 +103,7 @@ pip install -r requirements.txt
 
 ### With a `.env` file
 
-Create `.env` in the project root:
+Create `.env` in the project root — it is loaded automatically on startup:
 
 ```env
 DISCORD_WEBHOOK=https://discord.com/api/webhooks/...
@@ -115,18 +115,9 @@ DB_PATH=./fluxcord.db
 DAILY_HOUR_UTC=8
 ```
 
-Load it and run:
+Then just run:
 
 ```bash
-# Linux / macOS
-export $(grep -v '^#' .env | xargs)
-python -m src.main
-
-# Windows PowerShell
-Get-Content .env | Where-Object { $_ -notmatch '^#' } | ForEach-Object {
-    $k, $v = $_ -split '=', 2
-    [System.Environment]::SetEnvironmentVariable($k, $v)
-}
 python -m src.main
 ```
 
@@ -146,10 +137,9 @@ python -m pytest tests/ -q
 Runs checks immediately without the scheduler loop. Useful for verifying output in Discord before deploying.
 
 ```bash
-# Set vars first (PowerShell example)
-$env:DISCORD_WEBHOOK = "https://discord.com/api/webhooks/..."
-$env:WALLET = "t1YourAddress"
-$env:DB_PATH = "./test.db"
+# Uses your .env file automatically — or set DB_PATH to keep test state separate
+DB_PATH=./test.db python run_now.py  # Linux/macOS
+$env:DB_PATH="./test.db"; python run_now.py  # Windows PowerShell
 
 # Run everything
 python run_now.py
